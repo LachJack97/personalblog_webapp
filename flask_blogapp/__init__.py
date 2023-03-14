@@ -5,6 +5,7 @@ from flask import Flask
 def create_app(test_config=None):
     # create and configures the app - create_app is the application factory function
     app = Flask(__name__, instance_relative_config=True)
+    # app = Flask
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'blogapp.sqlite'),
@@ -26,5 +27,8 @@ def create_app(test_config=None):
     @app.route('./hello')
     def hello():
         return "Hello World!"
+    
+    from . import db
+    db.init_app(app)
     
     return app
